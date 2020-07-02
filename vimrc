@@ -1,5 +1,90 @@
-" enable syntax highlighting 
-syntax enable
+set nocompatible    " be iMproved, required
+filetype off        " required
+
+" set the runtime path inculde Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" keep plugin commands between vundle#begin/end
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" For auto completion script
+Plugin 'Valloric/YouCompleteMe'
+
+" Git Wrapper
+Plugin 'tpope/vim-fugitive'
+
+" tree explorer
+Plugin 'scrooloose/nerdtree'
+
+" status/tibeline for vim
+Plugin 'vim-airline/vim-airline'
+
+" Solarize theme
+Plugin 'altercation/vim-colors-solarized'
+
+" Quoting made simple
+Plugin 'tpope/vim-surround'
+
+" Syntax Checking
+Plugin 'scrooloose/syntastic'
+
+" All of your plugin must be added before th efollowing line
+call vundle#end()           " required
+filetype plugin indent on   " required
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append '!' to update or just :PluginUpdate
+" :PluginSeach foo  - searches for foo; append '!' to refresh local cache
+" :PluginClean      - confirms removal of unused plugin; append '!' to auto-approve removal
+" see :h vundle for more details or wiki for FAQ
+" put yout non-plugin stuff after this line
+
+" Functional
+
+" Syntastic
+" Type Checker
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" remap key
+inoremap jk <ESC>
+
+" NERDTree
+
+" Automatic open NERDTree when vim startup
+autocmd vimenter * NERDTree
+
+" Show dotfiles
+let NERDTreeShowHidden=1
+
+" If more than one window and previous buffer was NERDTree, go back to it.
+autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" How can I close vim if the only window left open is a NERDTree?
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endifi
+
+" How can I close NERDTree window after opening a file in it
+"autocmd BufEnter NERD_tree_* nmap  d<CR> <CR> :NERDTreeToggle <CR>
+"autocmd BufLeave NERD_tree_* unmap d<CR>
+
+" For Aesthetic
+
+" powerline integration fonts
+let g:airline_powerline_fonts = 1
 
 " show line numbers
 set number
@@ -25,5 +110,8 @@ set showmatch
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 
-" remap
-inoremap jk <ESC>
+" Color schema by solarized
+syntax enable
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
