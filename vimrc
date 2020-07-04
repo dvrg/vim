@@ -19,6 +19,9 @@ Plugin 'tpope/vim-fugitive'
 " tree explorer
 Plugin 'scrooloose/nerdtree'
 
+" Nerdtree git flag
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
 " status/tibeline for vim
 Plugin 'vim-airline/vim-airline'
 
@@ -30,6 +33,15 @@ Plugin 'tpope/vim-surround'
 
 " Syntax Checking
 Plugin 'scrooloose/syntastic'
+
+" vim-gutter, show git diff
+Plugin 'airblade/vim-gitgutter'
+
+" wakatime, timetracker
+Plugin 'wakatime/vim-wakatime'
+
+" ctrlp
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " All of your plugin must be added before th efollowing line
 call vundle#end()           " required
@@ -58,6 +70,7 @@ let g:syntastic_check_on_wq = 0
 
 " remap key
 inoremap jk <ESC>
+let mapleader = " "
 
 " NERDTree
 
@@ -67,6 +80,9 @@ autocmd vimenter * NERDTree
 " Show dotfiles
 let NERDTreeShowHidden=1
 
+" Show NERDTree by CTRL+n
+map <C-n> :NERDTreeToggle<CR>
+
 " If more than one window and previous buffer was NERDTree, go back to it.
 autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 
@@ -74,12 +90,55 @@ autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | en
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+"How can I open NERDTree automatically when vim starts up on opening a directory?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
 " How can I close vim if the only window left open is a NERDTree?
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endifi
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " How can I close NERDTree window after opening a file in it
 "autocmd BufEnter NERD_tree_* nmap  d<CR> <CR> :NERDTreeToggle <CR>
 "autocmd BufLeave NERD_tree_* unmap d<CR>
+
+" How can I make sure vim does not open files and other buffers on NerdTree window?
+" If more than one window and previous buffer was NERDTree, go back to it.
+autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+
+" vim-airline
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" Spellchecking
+set spell spelllang=en_us
+
+" Ctrlp settings
+"" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+" MacOSX/Linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
+" Use a leader instead of the actual named binding
+nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
+" Shared bindings from Solution #1 from earlier
+nmap <leader>T :enew<cr>
+nmap <leader>bq :bp <BAR> bd #<cr>
 
 " For Aesthetic
 
