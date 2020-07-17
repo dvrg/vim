@@ -105,6 +105,9 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " If more than one window and previous buffer was NERDTree, go back to it.
 autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 
+" NERDTree git-flag - show file ignore
+let g:NERDTreeShowIgnoredStatus = 1
+
 " vim-airline
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -172,5 +175,5 @@ let python_highlight_all = 1
 " Color schema by solarized
 syntax enable
 set background=dark
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 colorscheme solarized
