@@ -43,6 +43,12 @@ Plugin 'wakatime/vim-wakatime'
 " ctrlp
 Plugin 'ctrlpvim/ctrlp.vim'
 
+" Ale
+Plugin 'dense-analysis/ale'
+
+" Autopairs
+Plugin 'jiangmiao/auto-pairs'
+
 " All of your plugin must be added before th efollowing line
 call vundle#end()           " required
 filetype plugin indent on   " required
