@@ -49,6 +49,9 @@ Plugin 'dense-analysis/ale'
 " Autopairs
 Plugin 'jiangmiao/auto-pairs'
 
+" Prettier
+Plugin 'prettier/vim-prettier'
+
 " All of your plugin must be added before th efollowing line
 call vundle#end()           " required
 filetype plugin indent on   " required
